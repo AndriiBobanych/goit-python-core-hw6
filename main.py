@@ -135,3 +135,4 @@ if __name__ == '__main__':
         folder_for_scan = Path(sys.argv[1])
         print(f'We start in folder {folder_for_scan.resolve()}')
         main_script(folder_for_scan.resolve())
+
