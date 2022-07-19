@@ -15,7 +15,7 @@ from pathlib import Path
 def user_folder_scan(path: Path) -> None:
     for element in path.iterdir():
         if element.is_dir():
-            if item.name not in ('archives', 'video', 'audio', 'documents', 'images', 'other'):
+            if element.name not in ('archives', 'video', 'audio', 'documents', 'images', 'other'):
                 # we use recursion to check the attached subfolder
                 user_folder_scan(element)
             else:
