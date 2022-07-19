@@ -42,7 +42,7 @@ def handle_folder(folder: Path):
 
 
 def main(folder: Path):
-    parser.user_folder_scan(folder)
+    parser.scan(folder)
     for file in parser.JPEG_IMAGES:
         handle_media(file, folder / 'images' / 'JPEG')
     for file in parser.JPG_IMAGES:
