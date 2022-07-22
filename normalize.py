@@ -26,4 +26,3 @@ if __name__ == '__main__':
 
     file_for_normalize = sys.argv[1]
     print(normalize(file_for_normalize))
-    
