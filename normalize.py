@@ -17,8 +17,11 @@ for cyr, lat in zip(CYRILLIC_SYMBOLS, TRANSLATION):
 
 
 def normalize(name: str) -> str:
+    # we make transliteration of cyrillic letters to latin
     translate_name = name.translate(TRANSLITERATION_DICT)
-    translate_name = re.sub(r'\W', '_', translate_name)     # we change unknown symbols to "_"
+    idx = translate_name.rfind(".")
+    # we change unknown symbols to "_"
+    translate_name = re.sub(r'\W', '_', translate_name[0:idx]) + translate_name[idx:]
     return translate_name
 
 
