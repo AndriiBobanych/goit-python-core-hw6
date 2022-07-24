@@ -43,7 +43,6 @@ def user_folder_scan(path: Path) -> None:
             print(f"file_extension: {file_extension}")
 
             if file_extension in images_ext:
-                print(f"images_list.append -> full_path_name {full_path_name}")
                 images_list.append(full_path_name)
                 extensions_set.add(file_extension)
 
@@ -56,7 +55,6 @@ def user_folder_scan(path: Path) -> None:
                 extensions_set.add(file_extension)
 
             elif file_extension in documents_ext:
-                print(f"documents_list.append -> full_path_name {full_path_name}")
                 documents_list.append(full_path_name)
                 extensions_set.add(file_extension)
 
@@ -69,12 +67,47 @@ def user_folder_scan(path: Path) -> None:
                 unknown_ext_set.add(file_extension)
 
 
+            for file in images_list:
+                print(f"main_script -> file: {file}")
+                handle_file(file, path / 'images')
+                print(path / 'images')
+
+            for file in video_list:
+                print(f"main_script -> file: {file}")
+                handle_file(file, path / 'video')
+                print(path / 'video')
+
+            for file in audio_list:
+                print(f"main_script -> file: {file}")
+                handle_file(file, path / 'audio')
+                print(path / 'audio')
+
+            for file in documents_list:
+                print(f"main_script -> file: {file}")
+                handle_file(file, path / 'documents')
+                print(path / 'documents')
+
+            for file in archives_list:
+                print(f"main_script -> file: {file}")
+                handle_archive(file, path / 'archives')
+                print(path / 'archives')
+
+            for file in unknown_list:
+                print(f"main_script -> file: {file}")
+                handle_file(file, path / 'other')
+                print(path / 'other')
+
+
         # we check if element is "folder"
         if element.is_dir():
             if element.name not in ('archives', 'video', 'audio', 'documents', 'images', 'other'):
                 folders_list.append(element)
                 # if "yes" - we use recursion to check the attached sub-folder
                 user_folder_scan(element)
+
+                for folder in folders_list:
+                    print(f"main_script -> folder: {folder}")
+                    handle_folder(folder)
             else:
                 continue
 
@@ -114,39 +147,39 @@ def handle_folder(folder):
 def main_script(folder: Path):
     user_folder_scan(folder)
 
-    for file in images_list:
-        print(f"main_script -> file: {file}")
-        handle_file(file, folder / 'images')
-        print(folder / 'images')
-
-    for file in video_list:
-        print(f"main_script -> file: {file}")
-        handle_file(file, folder / 'video')
-        print(folder / 'video')
-
-    for file in audio_list:
-        print(f"main_script -> file: {file}")
-        handle_file(file, folder / 'audio')
-        print(folder / 'audio')
-
-    for file in documents_list:
-        print(f"main_script -> file: {file}")
-        handle_file(file, folder / 'documents')
-        print(folder / 'documents')
-
-    for file in archives_list:
-        print(f"main_script -> file: {file}")
-        handle_archive(file, folder / 'archives')
-        print(folder / 'archives')
-
-    for file in unknown_list:
-        print(f"main_script -> file: {file}")
-        handle_file(file, folder / 'other')
-        print(folder / 'other')
-
-    for folder in folders_list:
-        print(f"main_script -> folder: {folder}")
-        handle_folder(folder)
+    # for file in images_list:
+    #     print(f"main_script -> file: {file}")
+    #     handle_file(file, folder/'images')
+    #     print(folder/'images')
+    #
+    # for file in video_list:
+    #     print(f"main_script -> file: {file}")
+    #     handle_file(file, folder/'video')
+    #     print(folder/'video')
+    #
+    # for file in audio_list:
+    #     print(f"main_script -> file: {file}")
+    #     handle_file(file, folder/'audio')
+    #     print(folder/'audio')
+    #
+    # for file in documents_list:
+    #     print(f"main_script -> file: {file}")
+    #     handle_file(file, folder/'documents')
+    #     print(folder/'documents')
+    #
+    # for file in archives_list:
+    #     print(f"main_script -> file: {file}")
+    #     handle_archive(file, folder/'archives')
+    #     print(folder/'archives')
+    #
+    # for file in unknown_list:
+    #     print(f"main_script -> file: {file}")
+    #     handle_file(file, folder/'other')
+    #     print(folder/'other')
+    #
+    # for folder in folders_list:
+    #     print(f"main_script -> folder: {folder}")
+    #     handle_folder(folder)
 
 
 # if main unit --------------------------------------------------------
@@ -156,4 +189,3 @@ if __name__ == '__main__':
         folder_for_scan = Path(sys.argv[1])
         print(f'We start in folder {folder_for_scan.resolve()}')
         main_script(folder_for_scan.resolve())
-
