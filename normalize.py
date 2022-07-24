@@ -3,9 +3,9 @@ import sys
 
 
 CYRILLIC_SYMBOLS = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяєіїґ'
-TRANSLATION = ("a", "b", "v", "g", "d", "e", "e", "j", "z", "y", "j", 
-                "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "f", "h", 
-                "ts", "ch", "sh", "sch", "", "y", "", "e", "yu", "ja", "je", "i", "ji", "g")
+TRANSLATION = ("a", "b", "v", "g", "d", "e", "e", "j", "z", "y", "j",
+               "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "f", "h",
+               "ts", "ch", "sh", "sch", "", "y", "", "e", "yu", "ja", "je", "i", "ji", "g")
 
 
 TRANSLITERATION_DICT = {}    # dictionary for collection of transliterations cyr: lat
