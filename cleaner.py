@@ -4,8 +4,6 @@ import shutil
 from normalize import normalize
 
 
-DESTINATION: Optional(str) = None
-
 ARCHIVES = "archives"
 UNKNOWN = "unknown"
 
@@ -36,12 +34,16 @@ def unpack_archive(archive_src: str, destination_folder: str):
 def move_to_category_folder(src: str, destination: str):
     category = define_category(src)
     destination_folder: str = os.path.join(destination, category)  # - /target/images
+
+    if not os.path.exists(destination_folder):
+        os.mkdir(destination_folder)
+
     if category == ARCHIVES:
         unpack_archive(src, destination_folder)
         return
 
-    filename = os.path.split(src)  # /target/some_subfolder/image.jpeg
-    new_filename = normalize(filename.split(".")[-1])  # => zobrazenna.jpeg
+    filename: str = os.path.split(src)[-1]
+    new_filename = normalize(filename)
     destination_filepath = os.path.join(destination_folder, new_filename)  # target/images/zobrazenna.jpeg
     shutil.move(src, destination_filepath)
 
@@ -58,7 +60,7 @@ def arrange_folder(target_path: str, destination_folder: str = None):
             arrange_folder(file_path)
 
         elif os.path.isfile(file_path):
-            move_to_category_folder(file_path)
+            move_to_category_folder(file_path, destination_folder)
 
         else:
             raise OSError
