@@ -16,7 +16,7 @@ for cyr, lat in zip(CYRILLIC_SYMBOLS, TRANSLATION):
     TRANSLITERATION_DICT[ord(cyr.upper())] = lat.upper()
 
 
-def normalize(name: str) -> str:
+def normalize(name):
     # we make transliteration of cyrillic letters to latin
     translate_name = name.translate(TRANSLITERATION_DICT)
     idx = translate_name.rfind(".")
