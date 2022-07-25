@@ -16,14 +16,22 @@ CATEGORIES: Dict[str, List] = {
     "unknowns": [],
     }
 
+sorted_files_list = []
+extensions_set = set()
+unknown_ext_set = set()
+
 
 def define_category(file_path: str):
     global CATEGORIES
     extension = file_path.split(".")[-1]
+
     for category, category_extensions in CATEGORIES.items():
         if extension in category_extensions:
+            extensions_set.add(extension)
             return category
+
     CATEGORIES[UNKNOWN].append(extension)
+    unknown_ext_set.add(extension)
     return UNKNOWN
 
 
@@ -45,10 +53,11 @@ def move_to_category_folder(src: str, destination: str):
     filename: str = os.path.split(src)[-1]
     new_filename = normalize(filename)
     destination_filepath = os.path.join(destination_folder, new_filename)  # target/images/zobrazenna.jpeg
+    sorted_files_list.append(destination_filepath)
     shutil.move(src, destination_filepath)
 
 
-def arrange_folder(target_path: str, destination_folder: str = None):
+def arrange_files_sorting_in_folder(target_path: str, destination_folder: str = None):
     if destination_folder is None:
         destination_folder = target_path
 
@@ -57,7 +66,7 @@ def arrange_folder(target_path: str, destination_folder: str = None):
         file_path: str = os.path.join(target_path, filename)
 
         if os.path.isdir(file_path):
-            arrange_folder(file_path)
+            arrange_files_sorting_in_folder(file_path)
 
         elif os.path.isfile(file_path):
             move_to_category_folder(file_path, destination_folder)
@@ -65,3 +74,6 @@ def arrange_folder(target_path: str, destination_folder: str = None):
         else:
             raise OSError
 
+    # print(f"The following files were found and sorted: {sorted_files_list}\n")
+    # print(f"To appropriate folders were sorted files with extensions: {extensions_set}\n")
+    # print(f"To folder 'unknown' were sorted files with extensions: {unknown_ext_set}\n")
